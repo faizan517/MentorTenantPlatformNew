@@ -22,7 +22,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Dashboard} />
       <Route path="/tenants" component={Tenants} />
-      <Route path="/tenants/:id" component={TenantProfile} />
+      <Route path="/tenant/:id" component={TenantProfile} />
       <Route path="/licenses" component={Licenses} />
       <Route path="/metadata" component={MetaData} />
       <Route path="/processors" component={Processors} />
