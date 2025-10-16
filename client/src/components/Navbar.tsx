@@ -10,16 +10,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAppStore } from "@/store/useAppStore";
 
 export default function Navbar() {
   const [, setLocation] = useLocation();
+  const sidebarOpen = useAppStore((state) => state.sidebarOpen);
 
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
     setLocation("/login");
   };
   return (
-    <header className="fixed top-0 left-[280px] right-0 h-16 bg-mentor-white border-b border-gray-200 flex items-center justify-between px-6 z-10">
+    <header className={`fixed top-0 right-0 h-16 bg-mentor-white border-b border-gray-200 flex items-center justify-between px-6 z-10 transition-all duration-300 ${
+      sidebarOpen ? 'left-[280px]' : 'left-[70px]'
+    }`}>
       <div className="flex items-center gap-4 flex-1 max-w-md">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />

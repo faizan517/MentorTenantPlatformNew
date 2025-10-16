@@ -4,6 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { useAppStore } from "@/store/useAppStore";
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
 import Login from "@/pages/Login";
@@ -40,6 +41,7 @@ function Router() {
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [location, setLocation] = useLocation();
+  const sidebarOpen = useAppStore((state) => state.sidebarOpen);
 
   useEffect(() => {
     const authStatus = localStorage.getItem("isAuthenticated") === "true";
@@ -70,7 +72,11 @@ function App() {
       <TooltipProvider>
         <div className="flex h-screen w-full bg-mentor-white">
           <Sidebar />
-          <div className="flex-1 flex flex-col ml-[280px]">
+          <div 
+            className={`flex-1 flex flex-col transition-all duration-300 ${
+              sidebarOpen ? 'ml-[280px]' : 'ml-[70px]'
+            }`}
+          >
             <Navbar />
             <main className="flex-1 overflow-auto mt-16 p-6 bg-gray-50">
               <Router />

@@ -13,8 +13,8 @@ import {
   ChevronLeft,
   ChevronRight
 } from "lucide-react";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useAppStore } from "@/store/useAppStore";
 
 const navItems = [
   { path: "/", icon: LayoutDashboard, label: "Dashboard" },
@@ -31,7 +31,8 @@ const navItems = [
 
 export default function Sidebar() {
   const [location] = useLocation();
-  const [collapsed, setCollapsed] = useState(false);
+  const { sidebarOpen, setSidebarOpen } = useAppStore();
+  const collapsed = !sidebarOpen;
 
   return (
     <aside className={`fixed left-0 top-0 h-screen ${collapsed ? 'w-[70px]' : 'w-[280px]'} bg-mentor-white border-r border-gray-200 flex flex-col transition-all duration-300`}>
@@ -44,7 +45,7 @@ export default function Sidebar() {
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={() => setSidebarOpen(!sidebarOpen)}
           className="ml-auto"
           data-testid="button-toggle-sidebar"
         >
