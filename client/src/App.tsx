@@ -1,10 +1,12 @@
-import { Switch, Route } from "wouter";
+import { useState, useEffect } from "react";
+import { Switch, Route, useLocation } from "wouter";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
+import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
 import Tenants from "@/pages/Tenants";
 import TenantProfile from "@/pages/TenantProfile";
@@ -36,6 +38,33 @@ function Router() {
 }
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [location, setLocation] = useLocation();
+
+  useEffect(() => {
+    const authStatus = localStorage.getItem("isAuthenticated") === "true";
+    setIsAuthenticated(authStatus);
+    
+    if (!authStatus && location !== "/login") {
+      setLocation("/login");
+    }
+  }, [location, setLocation]);
+
+  if (location === "/login") {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Login />
+          <Toaster />
+        </TooltipProvider>
+      </QueryClientProvider>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return null;
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>

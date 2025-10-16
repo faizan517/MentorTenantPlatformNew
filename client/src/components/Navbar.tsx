@@ -1,3 +1,4 @@
+import { useLocation } from "wouter";
 import { Search, Bell, User, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
@@ -11,6 +12,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export default function Navbar() {
+  const [, setLocation] = useLocation();
+
+  const handleLogout = () => {
+    localStorage.removeItem("isAuthenticated");
+    setLocation("/login");
+  };
   return (
     <header className="fixed top-0 left-[280px] right-0 h-16 bg-mentor-white border-b border-gray-200 flex items-center justify-between px-6 z-10">
       <div className="flex items-center gap-4 flex-1 max-w-md">
@@ -49,7 +56,7 @@ export default function Navbar() {
               <span>Profile</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem data-testid="menu-signout">
+            <DropdownMenuItem onClick={handleLogout} data-testid="menu-signout">
               <LogOut className="mr-2 h-4 w-4" />
               <span>Sign out</span>
             </DropdownMenuItem>
