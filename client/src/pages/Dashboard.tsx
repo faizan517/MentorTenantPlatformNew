@@ -31,8 +31,8 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Dashboard</h1>
-        <p className="text-muted-foreground mt-1">
+        <h1 className="text-3xl font-bold text-mentor-black">Dashboard</h1>
+        <p className="text-gray-600 mt-1">
           Monitor your platform's key metrics and activity
         </p>
       </div>
@@ -50,27 +50,27 @@ export default function Dashboard() {
         ))}
       </div>
 
-      <Card>
+      <Card className="rounded-xl shadow-sm">
         <CardHeader>
           <CardTitle>User Growth</CardTitle>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={mockChartData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-              <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
-              <YAxis stroke="hsl(var(--muted-foreground))" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              <XAxis dataKey="month" stroke="#6b7280" />
+              <YAxis stroke="#6b7280" />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "hsl(var(--popover))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "6px",
+                  backgroundColor: "#ffffff",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "12px",
                 }}
               />
               <Line
                 type="monotone"
                 dataKey="users"
-                stroke="hsl(var(--primary))"
+                stroke="#0048FF"
                 strokeWidth={2}
               />
             </LineChart>

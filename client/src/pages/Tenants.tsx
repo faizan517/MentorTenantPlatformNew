@@ -15,12 +15,12 @@ export default function Tenants() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Tenants</h1>
-          <p className="text-muted-foreground mt-1">
+          <h1 className="text-3xl font-bold text-mentor-black">Tenant Accounts</h1>
+          <p className="text-gray-600 mt-1">
             Manage your organization tenants
           </p>
         </div>
-        <Button data-testid="button-add-tenant">
+        <Button className="bg-mentor-blue hover:bg-mentor-blue/90" data-testid="button-add-tenant">
           <Plus className="w-4 h-4 mr-2" />
           Add Tenant
         </Button>

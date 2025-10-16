@@ -74,6 +74,18 @@ export default {
           foreground: "hsl(var(--sidebar-accent-foreground) / <alpha-value>)",
           border: "var(--sidebar-accent-border)"
         },
+        mentor: {
+          blue: "#0048FF",
+          black: "#11111F",
+          white: "#FFFFFF",
+          red: "#FF5151",
+          orange: "#FF6F43",
+          offwhite: "#FFF6EC",
+          yellow: "#FFF470",
+          pink: "#FF0569",
+          violet: "#8F91FF",
+          green: "#6BDFAB",
+        },
         success: "#6BDFAB",
         warning: "#FF6F43",
         error: "#FF5151",
@@ -83,6 +95,7 @@ export default {
         sans: ["var(--font-sans)"],
         serif: ["var(--font-serif)"],
         mono: ["var(--font-mono)"],
+        axiforma: ["Axiforma", "Inter", "sans-serif"],
       },
       keyframes: {
         "accordion-down": {

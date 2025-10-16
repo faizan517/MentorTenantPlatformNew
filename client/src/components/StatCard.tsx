@@ -15,12 +15,12 @@ interface StatCardProps {
 
 export default function StatCard({ title, value, icon: Icon, trend, testId }: StatCardProps) {
   return (
-    <Card data-testid={testId}>
+    <Card className="rounded-xl shadow-sm" data-testid={testId}>
       <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground">
+        <CardTitle className="text-sm font-medium text-gray-600">
           {title}
         </CardTitle>
-        <Icon className="w-4 h-4 text-muted-foreground" />
+        <Icon className="w-4 h-4 text-gray-600" />
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold" data-testid={`${testId}-value`}>
@@ -29,14 +29,14 @@ export default function StatCard({ title, value, icon: Icon, trend, testId }: St
         {trend && (
           <div className="flex items-center gap-1 mt-1">
             {trend.isPositive ? (
-              <TrendingUp className="w-3 h-3 text-success" />
+              <TrendingUp className="w-3 h-3 text-mentor-green" />
             ) : (
-              <TrendingDown className="w-3 h-3 text-error" />
+              <TrendingDown className="w-3 h-3 text-mentor-red" />
             )}
-            <span className={`text-xs ${trend.isPositive ? "text-success" : "text-error"}`}>
+            <span className={`text-xs ${trend.isPositive ? "text-mentor-green" : "text-mentor-red"}`}>
               {trend.value}%
             </span>
-            <span className="text-xs text-muted-foreground">vs last month</span>
+            <span className="text-xs text-gray-500">vs last month</span>
           </div>
         )}
       </CardContent>

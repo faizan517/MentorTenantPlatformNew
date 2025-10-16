@@ -39,11 +39,11 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className="flex h-screen w-full bg-background">
+        <div className="flex h-screen w-full bg-mentor-white">
           <Sidebar />
           <div className="flex-1 flex flex-col ml-[280px]">
             <Navbar />
-            <main className="flex-1 overflow-auto mt-16 p-6">
+            <main className="flex-1 overflow-auto mt-16 p-6 bg-gray-50">
               <Router />
             </main>
           </div>

@@ -17,7 +17,7 @@ interface TableWidgetProps {
 
 export default function TableWidget({ title, headers, data, testId }: TableWidgetProps) {
   return (
-    <Card data-testid={testId}>
+    <Card className="rounded-xl shadow-sm" data-testid={testId}>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
