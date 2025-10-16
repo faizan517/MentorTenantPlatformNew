@@ -10,6 +10,7 @@ import {
   Shield, 
   Users, 
   Settings,
+  ScrollText,
   ChevronLeft,
   ChevronRight
 } from "lucide-react";
@@ -28,6 +29,7 @@ const navItems = [
   { path: "/roles", icon: Shield, label: "Roles & Rights" },
   { path: "/users", icon: Users, label: "Internal Users" },
   { path: "/settings", icon: Settings, label: "Settings" },
+  { path: "/audit-logs", icon: ScrollText, label: "Audit Logs" },
 ];
 
 export default function Sidebar() {

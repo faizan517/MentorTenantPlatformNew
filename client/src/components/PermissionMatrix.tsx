@@ -40,7 +40,7 @@ export default function PermissionMatrix({
           <table className="w-full border-collapse">
             <thead>
               <tr className="border-b">
-                <th className="text-left text-sm font-medium text-gray-600 pb-4 pr-6 sticky left-0 bg-white">
+                <th className="text-left text-sm font-medium text-gray-600 pb-4 pr-6 sticky left-0 ">
                   Role / Module
                 </th>
                 {modules.map((module) => (
@@ -56,7 +56,7 @@ export default function PermissionMatrix({
             <tbody>
               {roles.map((role) => (
                 <tr key={role} className="border-t border-gray-200">
-                  <td className="py-4 pr-6 text-sm font-medium sticky left-0 bg-white">
+                  <td className="py-4 pr-6 text-sm font-medium sticky left-0 ">
                     {role}
                   </td>
                   {modules.map((module) => (

@@ -155,8 +155,8 @@ export default function LicenseManagerUI() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-mentor-black">License Policy Manager</h1>
-          <p className="text-gray-600 mt-1">Manage license policies and renewal settings</p>
+          <h1 className="text-xl font-semibold text-mentor-black">License Policy Manager</h1>
+          <p className="text-gray-600 text-sm">Manage license policies and renewal settings</p>
         </div>
         <Button
           className="bg-mentor-blue hover:bg-mentor-blue/90"

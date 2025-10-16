@@ -21,6 +21,7 @@ import Billing from "@/pages/Billing";
 import Roles from "@/pages/Roles";
 import Users from "@/pages/Users";
 import Settings from "@/pages/Settings";
+import AuditLogs from "@/pages/AuditLogs";
 
 function Router() {
   return (
@@ -38,6 +39,7 @@ function Router() {
       <Route path="/roles" component={Roles} />
       <Route path="/users" component={Users} />
       <Route path="/settings" component={Settings} />
+      <Route path="/audit-logs" component={AuditLogs} />
     </Switch>
   );
 }
@@ -82,7 +84,7 @@ function App() {
             }`}
           >
             <Navbar />
-            <main className="flex-1 overflow-auto mt-16 p-6 bg-gray-50">
+            <main className="flex-1 overflow-auto mt-16 p-6 bg-white">
               <Router />
             </main>
           </div>
