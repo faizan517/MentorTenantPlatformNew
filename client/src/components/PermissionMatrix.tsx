@@ -4,28 +4,30 @@ import { useState } from "react";
 
 interface PermissionMatrixProps {
   roles: string[];
-  permissions: string[];
-  initialMatrix?: Record<string, Record<string, boolean>>;
+  modules: string[];
+  initialPermissions?: Record<string, Record<string, { view: boolean; edit: boolean; delete: boolean }>>;
 }
 
 export default function PermissionMatrix({ 
   roles, 
-  permissions,
-  initialMatrix = {}
+  modules,
+  initialPermissions = {}
 }: PermissionMatrixProps) {
-  const [matrix, setMatrix] = useState<Record<string, Record<string, boolean>>>(
-    initialMatrix
+  const [permissions, setPermissions] = useState<Record<string, Record<string, { view: boolean; edit: boolean; delete: boolean }>>>(
+    initialPermissions
   );
 
-  const handleToggle = (role: string, permission: string) => {
-    setMatrix((prev) => ({
+  const handleToggle = (role: string, module: string, action: 'view' | 'edit' | 'delete') => {
+    setPermissions((prev) => ({
       ...prev,
       [role]: {
         ...prev[role],
-        [permission]: !prev[role]?.[permission],
+        [module]: {
+          ...prev[role]?.[module],
+          [action]: !prev[role]?.[module]?.[action],
+        },
       },
     }));
-    console.log(`Permission ${permission} for ${role} toggled`);
   };
 
   return (
@@ -35,33 +37,56 @@ export default function PermissionMatrix({
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full border-collapse">
             <thead>
-              <tr>
-                <th className="text-left text-sm font-medium text-muted-foreground pb-4 pr-8">
-                  Role / Permission
+              <tr className="border-b">
+                <th className="text-left text-sm font-medium text-gray-600 pb-4 pr-6 sticky left-0 bg-white">
+                  Role / Module
                 </th>
-                {permissions.map((permission) => (
+                {modules.map((module) => (
                   <th
-                    key={permission}
-                    className="text-left text-sm font-medium text-muted-foreground pb-4 px-4"
+                    key={module}
+                    className="text-left text-sm font-medium text-gray-600 pb-4 px-4 min-w-32"
                   >
-                    {permission}
+                    {module}
                   </th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {roles.map((role) => (
-                <tr key={role} className="border-t border-border">
-                  <td className="py-4 pr-8 text-sm font-medium">{role}</td>
-                  {permissions.map((permission) => (
-                    <td key={permission} className="py-4 px-4">
-                      <Checkbox
-                        checked={matrix[role]?.[permission] || false}
-                        onCheckedChange={() => handleToggle(role, permission)}
-                        data-testid={`checkbox-${role}-${permission}`}
-                      />
+                <tr key={role} className="border-t border-gray-200">
+                  <td className="py-4 pr-6 text-sm font-medium sticky left-0 bg-white">
+                    {role}
+                  </td>
+                  {modules.map((module) => (
+                    <td key={module} className="py-4 px-4">
+                      <div className="flex flex-col gap-2">
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <Checkbox
+                            checked={permissions[role]?.[module]?.view || false}
+                            onCheckedChange={() => handleToggle(role, module, 'view')}
+                            data-testid={`checkbox-${role}-${module}-view`}
+                          />
+                          <span className="text-xs text-gray-600">View</span>
+                        </label>
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <Checkbox
+                            checked={permissions[role]?.[module]?.edit || false}
+                            onCheckedChange={() => handleToggle(role, module, 'edit')}
+                            data-testid={`checkbox-${role}-${module}-edit`}
+                          />
+                          <span className="text-xs text-gray-600">Edit</span>
+                        </label>
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <Checkbox
+                            checked={permissions[role]?.[module]?.delete || false}
+                            onCheckedChange={() => handleToggle(role, module, 'delete')}
+                            data-testid={`checkbox-${role}-${module}-delete`}
+                          />
+                          <span className="text-xs text-gray-600">Delete</span>
+                        </label>
+                      </div>
                     </td>
                   ))}
                 </tr>

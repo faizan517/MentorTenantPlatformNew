@@ -1,30 +1,74 @@
 import PermissionMatrix from "@/components/PermissionMatrix";
 
-// TODO: Remove mock data
-const roles = ["Super Admin", "Admin", "Manager", "Viewer"];
-const permissions = ["Read", "Write", "Delete", "Manage Users", "Manage Billing"];
+const roles = ["Super Admin", "Ops", "Finance", "Support"];
+const modules = [
+  "Tenants",
+  "Licenses",
+  "MetaData",
+  "Processors",
+  "Devices",
+  "Billing",
+  "Users",
+  "Settings"
+];
 
-const initialMatrix = {
-  "Super Admin": { Read: true, Write: true, Delete: true, "Manage Users": true, "Manage Billing": true },
-  "Admin": { Read: true, Write: true, Delete: true, "Manage Users": true, "Manage Billing": false },
-  "Manager": { Read: true, Write: true, Delete: false, "Manage Users": false, "Manage Billing": false },
-  "Viewer": { Read: true, Write: false, Delete: false, "Manage Users": false, "Manage Billing": false },
+const initialPermissions = {
+  "Super Admin": {
+    Tenants: { view: true, edit: true, delete: true },
+    Licenses: { view: true, edit: true, delete: true },
+    MetaData: { view: true, edit: true, delete: true },
+    Processors: { view: true, edit: true, delete: true },
+    Devices: { view: true, edit: true, delete: true },
+    Billing: { view: true, edit: true, delete: true },
+    Users: { view: true, edit: true, delete: true },
+    Settings: { view: true, edit: true, delete: true },
+  },
+  "Ops": {
+    Tenants: { view: true, edit: true, delete: false },
+    Licenses: { view: true, edit: true, delete: false },
+    MetaData: { view: true, edit: true, delete: false },
+    Processors: { view: true, edit: false, delete: false },
+    Devices: { view: true, edit: true, delete: false },
+    Billing: { view: true, edit: false, delete: false },
+    Users: { view: true, edit: false, delete: false },
+    Settings: { view: true, edit: false, delete: false },
+  },
+  "Finance": {
+    Tenants: { view: true, edit: false, delete: false },
+    Licenses: { view: true, edit: false, delete: false },
+    MetaData: { view: false, edit: false, delete: false },
+    Processors: { view: true, edit: true, delete: false },
+    Devices: { view: false, edit: false, delete: false },
+    Billing: { view: true, edit: true, delete: false },
+    Users: { view: false, edit: false, delete: false },
+    Settings: { view: false, edit: false, delete: false },
+  },
+  "Support": {
+    Tenants: { view: true, edit: false, delete: false },
+    Licenses: { view: true, edit: false, delete: false },
+    MetaData: { view: true, edit: false, delete: false },
+    Processors: { view: true, edit: false, delete: false },
+    Devices: { view: true, edit: false, delete: false },
+    Billing: { view: true, edit: false, delete: false },
+    Users: { view: true, edit: false, delete: false },
+    Settings: { view: false, edit: false, delete: false },
+  },
 };
 
 export default function Roles() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Roles & Permissions</h1>
-        <p className="text-muted-foreground mt-1">
-          Configure role-based access control
+        <h1 className="text-3xl font-bold text-mentor-black">Roles & Rights</h1>
+        <p className="text-gray-600 mt-1">
+          Configure role-based access control and permissions
         </p>
       </div>
 
       <PermissionMatrix
         roles={roles}
-        permissions={permissions}
-        initialMatrix={initialMatrix}
+        modules={modules}
+        initialPermissions={initialPermissions}
       />
     </div>
   );
