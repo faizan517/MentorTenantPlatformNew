@@ -12,9 +12,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Modal from "@/components/Modal";
-import { Plus, Edit } from "lucide-react";
+import { Plus, Edit, Settings } from "lucide-react";
 import { licenseTiers } from "@/data/licenses";
+import LicenseManagerUI from "./LicenseManagerUI";
 
 interface Package {
   id: string;
@@ -77,62 +79,82 @@ export default function Licenses() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-mentor-black">License Packages</h1>
-          <p className="text-gray-600 mt-1">Manage platform license tiers</p>
+          <h1 className="text-3xl font-bold text-mentor-black">License Management</h1>
+          <p className="text-gray-600 mt-1">Manage license packages and policies</p>
         </div>
-        <Button
-          className="bg-mentor-blue hover:bg-mentor-blue/90"
-          onClick={handleAddNew}
-          data-testid="button-add-package"
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          Add Package
-        </Button>
       </div>
 
-      <Card className="rounded-xl shadow-sm">
-        <CardHeader>
-          <CardTitle>All Packages</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Package Name</TableHead>
-                <TableHead>Features</TableHead>
-                <TableHead>Monthly Price</TableHead>
-                <TableHead>Yearly Price</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {packages.map((pkg) => (
-                <TableRow key={pkg.id}>
-                  <TableCell className="font-medium">{pkg.name}</TableCell>
-                  <TableCell>
-                    <div className="text-sm text-gray-600">
-                      {pkg.features.slice(0, 2).join(", ")}
-                      {pkg.features.length > 2 && ` +${pkg.features.length - 2} more`}
-                    </div>
-                  </TableCell>
-                  <TableCell>PKR {pkg.monthlyPrice.toLocaleString()}</TableCell>
-                  <TableCell>PKR {pkg.yearlyPrice.toLocaleString()}</TableCell>
-                  <TableCell>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleEdit(pkg)}
-                      data-testid={`button-edit-${pkg.id}`}
-                    >
-                      <Edit className="w-4 h-4" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+      <Tabs defaultValue="packages" className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="packages">License Packages</TabsTrigger>
+          <TabsTrigger value="manager">Policy Manager</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="packages" className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-xl font-semibold text-mentor-black">License Packages</h2>
+              <p className="text-gray-600 text-sm">Manage platform license tiers</p>
+            </div>
+            <Button
+              className="bg-mentor-blue hover:bg-mentor-blue/90"
+              onClick={handleAddNew}
+              data-testid="button-add-package"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Add Package
+            </Button>
+          </div>
+
+          <Card className="rounded-xl shadow-sm">
+            <CardHeader>
+              <CardTitle>All Packages</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Package Name</TableHead>
+                    <TableHead>Features</TableHead>
+                    <TableHead>Monthly Price</TableHead>
+                    <TableHead>Yearly Price</TableHead>
+                    <TableHead>Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {packages.map((pkg) => (
+                    <TableRow key={pkg.id}>
+                      <TableCell className="font-medium">{pkg.name}</TableCell>
+                      <TableCell>
+                        <div className="text-sm text-gray-600">
+                          {pkg.features.slice(0, 2).join(", ")}
+                          {pkg.features.length > 2 && ` +${pkg.features.length - 2} more`}
+                        </div>
+                      </TableCell>
+                      <TableCell>PKR {pkg.monthlyPrice.toLocaleString()}</TableCell>
+                      <TableCell>PKR {pkg.yearlyPrice.toLocaleString()}</TableCell>
+                      <TableCell>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleEdit(pkg)}
+                          data-testid={`button-edit-${pkg.id}`}
+                        >
+                          <Edit className="w-4 h-4" />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="manager">
+          <LicenseManagerUI />
+        </TabsContent>
+      </Tabs>
 
       <Modal
         open={isModalOpen}

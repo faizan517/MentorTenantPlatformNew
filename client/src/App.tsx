@@ -10,8 +10,10 @@ import Navbar from "@/components/Navbar";
 import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
 import Tenants from "@/pages/Tenants";
+import AddTenant from "@/pages/AddTenant";
 import TenantProfile from "@/pages/TenantProfile";
 import Licenses from "@/pages/Licenses";
+import LicenseManagerUI from "@/pages/LicenseManagerUI";
 import MetaData from "@/pages/MetaData";
 import Processors from "@/pages/Processors";
 import Devices from "@/pages/Devices";
@@ -25,8 +27,10 @@ function Router() {
     <Switch>
       <Route path="/" component={Dashboard} />
       <Route path="/tenants" component={Tenants} />
+      <Route path="/tenants/add" component={AddTenant} />
       <Route path="/tenant/:id" component={TenantProfile} />
       <Route path="/licenses" component={Licenses} />
+      <Route path="/licenses/managerUI" component={LicenseManagerUI} />
       <Route path="/metadata" component={MetaData} />
       <Route path="/processors" component={Processors} />
       <Route path="/devices" component={Devices} />

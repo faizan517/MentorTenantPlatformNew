@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -19,26 +18,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Modal from "@/components/Modal";
 import { Plus, Search } from "lucide-react";
 import { tenants as initialTenants } from "@/data/tenants";
 import { useAppStore } from "@/store/useAppStore";
 
 export default function Tenants() {
   const [, setLocation] = useLocation();
-  const { tenants: storeTenants, addTenant } = useAppStore();
+  const { tenants: storeTenants } = useAppStore();
   const [allTenants, setAllTenants] = useState([...initialTenants]);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    type: "",
-    geography: "",
-    license: "",
-    startDate: "",
-    endDate: "",
-  });
 
   useEffect(() => {
     setAllTenants([...initialTenants, ...storeTenants]);
@@ -50,28 +39,6 @@ export default function Tenants() {
     return matchesSearch && matchesStatus;
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newTenant = {
-      name: formData.name,
-      type: formData.type,
-      license: formData.license,
-      status: "Active",
-      geography: formData.geography,
-      activationDate: formData.startDate,
-      expiryDate: formData.endDate,
-    };
-    addTenant(newTenant);
-    setIsModalOpen(false);
-    setFormData({
-      name: "",
-      type: "",
-      geography: "",
-      license: "",
-      startDate: "",
-      endDate: "",
-    });
-  };
 
   return (
     <div className="space-y-6">
@@ -84,7 +51,7 @@ export default function Tenants() {
         </div>
         <Button
           className="bg-mentor-blue hover:bg-mentor-blue/90"
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => setLocation("/tenants/add")}
           data-testid="button-add-tenant"
         >
           <Plus className="w-4 h-4 mr-2" />
@@ -166,108 +133,6 @@ export default function Tenants() {
         </CardContent>
       </Card>
 
-      <Modal
-        open={isModalOpen}
-        onOpenChange={setIsModalOpen}
-        title="Add New Tenant"
-        description="Enter tenant details to create a new account"
-      >
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="name">Tenant Name</Label>
-            <Input
-              id="name"
-              required
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              data-testid="input-tenant-name"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="type">Type</Label>
-            <Select
-              value={formData.type}
-              onValueChange={(value) => setFormData({ ...formData, type: value })}
-            >
-              <SelectTrigger data-testid="select-tenant-type">
-                <SelectValue placeholder="Select type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Hospital">Hospital</SelectItem>
-                <SelectItem value="Clinic">Clinic</SelectItem>
-                <SelectItem value="Diagnostic Center">Diagnostic Center</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="geography">Geography</Label>
-            <Input
-              id="geography"
-              required
-              value={formData.geography}
-              onChange={(e) => setFormData({ ...formData, geography: e.target.value })}
-              data-testid="input-tenant-geography"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="license">License</Label>
-            <Select
-              value={formData.license}
-              onValueChange={(value) => setFormData({ ...formData, license: value })}
-            >
-              <SelectTrigger data-testid="select-tenant-license">
-                <SelectValue placeholder="Select license" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Basic">Basic</SelectItem>
-                <SelectItem value="Pro">Pro</SelectItem>
-                <SelectItem value="Enterprise">Enterprise</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="startDate">Start Date</Label>
-              <Input
-                id="startDate"
-                type="date"
-                required
-                value={formData.startDate}
-                onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-                data-testid="input-start-date"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="endDate">End Date</Label>
-              <Input
-                id="endDate"
-                type="date"
-                required
-                value={formData.endDate}
-                onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-                data-testid="input-end-date"
-              />
-            </div>
-          </div>
-          <div className="flex justify-end gap-2 pt-4">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setIsModalOpen(false)}
-              data-testid="button-cancel"
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              className="bg-mentor-blue hover:bg-mentor-blue/90"
-              data-testid="button-submit-tenant"
-            >
-              Add Tenant
-            </Button>
-          </div>
-        </form>
-      </Modal>
     </div>
   );
 }

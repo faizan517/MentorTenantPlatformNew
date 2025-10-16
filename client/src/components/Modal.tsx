@@ -7,7 +7,16 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-export default function Modal({ trigger, title, description, children, open, onOpenChange }) {
+interface ModalProps {
+  trigger?: React.ReactNode;
+  title?: string;
+  description?: string;
+  children: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+
+export default function Modal({ trigger = null, title, description, children, open, onOpenChange }: ModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
